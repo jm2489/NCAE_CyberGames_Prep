@@ -6,7 +6,7 @@ This is for NCAE Cybergames - including any prep scripts we have made in advance
 
 - [getShrekd.sh](https://github.com/NJITICC/NCAE_CyberGames_Prep/blob/main/getshrekd.sh)
   - Checks logged in users against known good users.
-- [sudoChecker.sh](https://github.com/NJITICC/NCAE_CyberGames_Prep/blob/main/sudo_checker.sh)
+- [sudoChecker.sh](https://github.com/NJITICC/NCAE_CyberGames_Prep/blob/main/sudo_checker_new.sh)
   - Monitors users who can sudo and any changes to this.
 - [youdontevengohere.sh](https://github.com/NJITICC/NCAE_CyberGames_Prep/blob/main/youdontevengohere.sh)
   - Technically a shell script, but... this is the relevant portion of the script anyway
