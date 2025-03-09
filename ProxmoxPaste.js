@@ -50,7 +50,6 @@
                 document.getElementById('stop-button').remove();
             }
             const body = document.querySelector('body');
-            const iframe = document.querySelector('iframe');
             const button = document.createElement('button');
             const stopButton = document.createElement('button');
             button.setAttribute('id', 'paste-button');
