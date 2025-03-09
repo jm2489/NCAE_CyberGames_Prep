@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+IP=192.168.1.1
+GATEWAY=192.168.1.1
+DNS=192.168.1.1
+
+nmcli connection edit "$(nmcli -t -f NAME c show --active)"  << EOF
+set ipv4.method manual
+set ipv4.address $IP
+set ipv4.gateway $GATEWAY
+set ipv4.dns $DNS
+save persistent
+quit
+EOF
+
+systemctl restart NetworkManager systemd-resolved
+
+netplan generate || true
