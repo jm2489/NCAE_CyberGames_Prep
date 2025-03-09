@@ -76,7 +76,7 @@ Once SSH and networking is up in the competition environment, this will allow yo
 
 Before we get SSH access and internet setup in our infrastructure, all VM access is done through Proxmox's web VNC console. This console does not support copy and pasting, but we can run a JavaScript add-on in our browsers to "autotype" our clipboards in.
 
-The script is stored in [ProxmoxPaste.js](../ProxmoxPaste.js). It was minified with [Bookmarklet Maker](https://caiorss.github.io/bookmarklet-maker) and put [here](https://noahjacobson.com/files/proxmoxpaste.html) for easy access.
+The script is stored in [ProxmoxPaste.js](../ProxmoxPaste.js). It was generated with [Bookmarklet Maker](https://caiorss.github.io/bookmarklet-maker) and put [here](https://noahjacobson.com/files/ProxmoxPaste.html) for easy access.
 
 This has been tested on Google Chrome and Mozilla Firefox. Other browsers *should* work.
 
