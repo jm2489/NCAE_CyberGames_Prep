@@ -15,8 +15,10 @@
                      evt = new KeyboardEvent("keyup", {keyCode: 16});
                      el.dispatchEvent(evt);
 
-                 }else{
-                     evt = new KeyboardEvent("keydown", {key: x});
+                    }else if (x == '\n'){
+                        evt = new KeyboardEvent("keydown", {keyCode: 13});
+                    }else{
+                        evt = new KeyboardEvent("keydown", {key: x});
                 }
                 el.dispatchEvent(evt);
             }, delay);
