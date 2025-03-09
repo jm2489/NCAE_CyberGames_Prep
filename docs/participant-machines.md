@@ -47,12 +47,12 @@ Contains steps for before competition setup.
         User YOUR_FIRST_NAME
         ProxyJump ncae-jumphost
     
-    Host 172.18.*
+    Host 172.*
         IdentityFile ~/ncae2025
         User YOUR_FIRST_NAME
         ProxyJump ncae-jumphost
     
-    Host 192.168.1.*
+    Host 192.168.*
         IdentityFile ~/ncae2025
         User YOUR_FIRST_NAME
         ProxyJump ncae-jumphost,ncae-router
