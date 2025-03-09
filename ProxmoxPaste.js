@@ -1,6 +1,6 @@
 (function () {
     let delay = 20;
-    sendString = async (text, iframe) => {
+    sendString = async (text) => {
         if (!confirm('Paste ' +  text.split(/\n/).length + ' lines?'))
             return;
         const promptResult = prompt('Delay (in ms)', delay)
@@ -9,7 +9,8 @@
         } else {
             delay = parseInt(promptResult);
         }
-        const canvas = iframe.contentDocument.getElementById('canvas-id');
+        const iframe = document.querySelector('iframe');
+        const canvas = iframe.contentDocument.querySelector('canvas');
         const stopButton = document.getElementById('stop-button');
         let stop = false;
         const setStop = () => {
@@ -44,8 +45,11 @@
         stopButton.setAttribute('disabled', true);
     };
     setTimeout(()=>{
-            if (document.getElementById('paste-button') != null)
-                return;
+            if (document.getElementById('paste-button') != null) {
+                document.getElementById('paste-button').remove();
+                document.getElementById('stop-button').remove();
+            }
+            const body = document.querySelector('body');
             const iframe = document.querySelector('iframe');
             const button = document.createElement('button');
             const stopButton = document.createElement('button');
@@ -56,11 +60,10 @@
             stopButton.innerText = 'Stop Paste';
             button.addEventListener('click', () => {
                 navigator.clipboard.readText().then(text =>{
-                    window.sendString(text, iframe);
+                    window.sendString(text);
                 });
             });
-            iframe.parentElement.prepend(stopButton);
-            iframe.parentElement.prepend(button);
-            iframe.contentDocument.querySelector('canvas').setAttribute('id', 'canvas-id');
+            body.querySelector('div').prepend(stopButton);
+            body.querySelector('div').prepend(button);
     }, 500);
 })()
