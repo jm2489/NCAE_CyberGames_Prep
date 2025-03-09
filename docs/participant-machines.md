@@ -80,7 +80,7 @@ The script is stored in [ProxmoxPaste.js](../ProxmoxPaste.js). It was generated 
 
 This has been tested on Google Chrome and Mozilla Firefox. Other browsers *should* work.
 
-1. Navigate [here](https://noahjacobson.com/files/proxmoxpaste.html).
+1. Navigate [here](https://noahjacobson.com/files/ProxmoxPaste.html).
 2. Click and drag the `Proxmox Paste` link to your bookmarks bar.
     * If your bookmark bar does not always show, enable it to do so for the competition. This can be done in browser settings (or Ctrl+Shift+B on Chromium browsers).
 
