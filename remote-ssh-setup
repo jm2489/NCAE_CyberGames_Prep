@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "NJIT NCAE 2024 Remote SSH Setup Script"
+echo "NJIT NCAE 2025 Remote SSH Setup Script"
 echo
 
 # Check for root.
@@ -9,29 +9,15 @@ if [ "$EUID" -ne 0 ]
   exit 1
 fi
 
-
-# Find sudo group.
-if (getent group wheel &>/dev/null); then
-  echo "Detected sudo group 'wheel'."
-  sudo_group=wheel
-elif (getent group sudo &>/dev/null); then
-  echo "Detected sudo group 'sudo'."
-  sudo_group=sudo
-elif (getent group admin &>/dev/null); then
-  echo "Detected sudo group 'admin'."
-  sudo_group=admin
-else
-  echo "Unable to autodetect sudo group."
-  exit 1
-fi
+groupadd highlanders
+echo '%highlanders ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/10-highlanders
 
 # Creates team user.
 # $1: Username
 # $2: SSH public key.
 function createUser {
   echo "Creating team user for $1."
-  useradd -c "NJIT $1" -G "$sudo_group" "$1"
-  passwd -l $1
+  useradd -c "NJIT $1" -G "highlanders" -s "/bin/bash" "$1"
   mkdir -p /home/$1/.ssh
   echo $2 > /home/$1/.ssh/authorized_keys
   chown -R ${1}:${1} /home/$1/.ssh
@@ -43,12 +29,13 @@ createUser "USER" "SSHKEY"
 
 # Create local access user.
 echo "Creating local access user 'njit-local'."
-useradd -c "NJIT Local Only" -G "$sudo_group" "njit-local"
+useradd -c "NJIT Local Only" -G "highlanders" -s "/bin/bash" "njit-local"
 echo "Enter password for local access user."
-passwd "njit-local"
+/bin/passwd "njit-local"
 
-echo "Disabling SSH password authentication."
+echo "Disabling SSH password authentication and adding group match."
 sed -i -E 's/#?PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+echo "AllowGroups highlanders" > /etc/ssh/sshd_config
 
 echo "Restarting SSH daemon."
 systemctl restart sshd.service
