@@ -60,6 +60,7 @@ Contains steps for before competition setup.
 
     * Make sure to change `YOUR_UCID` (1 entry) and `YOUR_FIRST_NAME` (3 entries).
     * If you stored your key pair in a different location, make sure `IdentityFile` is set appropriately.
+    * `ncae-router`'s IP will almost definitely need to be changed on competition day.
 
 3. Save and exit.
 
