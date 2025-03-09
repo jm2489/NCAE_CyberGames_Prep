@@ -7,7 +7,7 @@ USER=$(whoami)
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
 # Log file location - somewhere that it can be written to.
-LOGFILE="/var/log/alocationofalogfile.log"
+LOGFILE="/var/log/hellothere.log"
 
 # This will append every command the user types to the log file
 # Format: user: command (date and time)

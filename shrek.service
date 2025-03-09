@@ -1,0 +1,12 @@
+[Unit]
+Description=The ogre is listening...
+
+[Service]
+ExecStart=/usr/local/bin/getshrekd.sh
+Restart=always
+RestartSec=1m
+StartLimitBurst=2
+StartLimitIntervalSec=30
+
+[Install]
+WantedBy=multi-user.target
