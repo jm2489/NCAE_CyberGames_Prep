@@ -35,7 +35,7 @@ echo "Enter password for local access user."
 
 echo "Disabling SSH password authentication and adding group match."
 sed -i -E 's/#?PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-echo "AllowGroups highlanders" > /etc/ssh/sshd_config
+echo "AllowGroups highlanders" >> /etc/ssh/sshd_config
 
 echo "Deleting root password authentication."
 /bin/passwd -dl root
