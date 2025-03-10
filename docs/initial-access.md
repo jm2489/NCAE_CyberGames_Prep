@@ -66,5 +66,6 @@ First steps to run once VMs are accessible.
 
     * **Do not run the script from the GitHub.** A script with our public keys/names will be sent in Discord.
     * For the local access user, use the password that is in the team's spreadsheet (there is a passwords tab).
+    * **If you are on the Shell/FTP machine:** The script will add a group limitation to who can sign in via SSH. This will need to be updated in `/etc/ssh/sshd_config` while setting up shell login.
 
 10. Notify group that initial access runbook is complete. Proceed with service setup.
