@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "NJIT NCAE 2025 Web UFW Script"
+echo "NJIT NCAE 2025 FTP UFW Script"
 echo
 
 # Checks if user is root
@@ -15,18 +15,14 @@ read JUMPHOST
 echo -n "Please enter in backup server IP Address Ex. 192.168.x.x"
 read BACKUP
 
-echo -n "Please enter in SQL server IP Address Ex. 192.168.x.x"
-read SQL
-
-echo -n "Please enter the port # for SQL server"
-read SQL_PORT
-
 ufw enable
-ufw allow port 80
-ufw allow port 443
-ufw allow $ADDRESS to any port 22
-ufw allow $BACKUP to any port 22
-ufw allow $SQL to any port $SQL_PORT
+ufw allow port 21/tcp
+ufw allow $JUMPHOST to any port 22/tcp
+ufw allow $BACKUP to any port 22/tcp
+ufw allow 40000:50000/tcp
+ufw allow 990/tcp
 ufw deny out to 172.16.0.0/12
 ufw deny out to 192.168.0.0/16
 ufw status
+
+
