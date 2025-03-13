@@ -8,7 +8,7 @@
 On the **Backup Server**, generate an SSH key pair so it can fetch configuration files:
 
 ```bash
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/backup_ssh_key
+ssh-keygen -t ed25519 -f ~/.ssh/backup_ssh_key
 ```
 - Press **Enter** when prompted (no passphrase needed for automation).
 - This will create:
