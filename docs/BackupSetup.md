@@ -1,5 +1,4 @@
-# How to set up you Backup Server
-
+# Backup Server Setup
 ## 1. Follow [Initial Access](https://github.com/NJITICC/NCAE_CyberGames_Prep/blob/main/docs/initial-access.md) setup on the Backup Server
 
 ---
@@ -18,7 +17,7 @@ ssh-keygen -t ed25519 -f ~/.ssh/backup_ssh_key
 ---
 
 ## 3. Copy the Public Key to Each Server
-For each server (**Web, FTP, DNS**), run:
+For each server (**Web, FTP, DNS, Database**), run:
 
 ```bash
 ssh-copy-id -i ~/.ssh/backup_ssh_key.pub user@server-ip
@@ -38,7 +37,7 @@ ssh user@server-ip "chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys"
 
 ---
 
-## 4. Test SSH Access**
+## 4. Test SSH Access
 From the Backup Server, test logging into each server **without a password**:
 
 ```bash
@@ -49,31 +48,44 @@ If successful, SSH authentication is set up correctly.
 
 ---
 
-## 5. Take a Manual Backup OR goto 6**
-### ** Web Server (Apache) **
+## 5. Take a Manual Backup OR Proceed to Step 6
+### **Web Server (Apache)**
 Backup configuration and website files:
 ```bash
 rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@web-server:/etc/apache2 /home/backup/web_config/
 rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@web-server:/var/www/html /home/backup/web_files/
 ```
 
-### ** FTP Server **
+### **FTP Server**
 Backup configuration and FTP root directory:
 ```bash
 rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@ftp-server:/etc/vsftpd.conf /home/backup/ftp_config/
 rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@ftp-server:/srv/ftp /home/backup/ftp_files/
 ```
 
-### ** DNS Server (BIND or other DNS software) **
+### **DNS Server (BIND or other DNS software)**
 Backup DNS configurations:
 ```bash
 rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@dns-server:/etc/bind /home/backup/dns_config/
 rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@dns-server:/var/named /home/backup/dns_zones/
 ```
 
+### **Database Server (PostgreSQL or MySQL)**
+#### PostgreSQL Backup:
+```bash
+ssh -i ~/.ssh/backup_ssh_key user@db-server "pg_dumpall -U username | gzip > /tmp/postgres_backup.sql.gz"
+rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@db-server:/tmp/postgres_backup.sql.gz /home/backup/postgres_backup/
+```
+
+#### MySQL Backup:
+```bash
+ssh -i ~/.ssh/backup_ssh_key user@db-server "mysqldump -u username -p'yourpassword' --all-databases | gzip > /tmp/mysql_backup.sql.gz"
+rsync -avz -e "ssh -i ~/.ssh/backup_ssh_key" user@db-server:/tmp/mysql_backup.sql.gz /home/backup/mysql_backup/
+```
+
 ---
 
-## ** 6. Automate Backups with a Cron Job**
+## **6. Automate Backups with a Cron Job**
 ### **1. Create the Backup Script**
 On the Backup Server, create `/home/backup/backup_servers.sh` and modify the username and IPs:
 ```bash
@@ -83,6 +95,7 @@ USERNAME="username"
 WEB_SERVER_IP="192.168.1.10"
 FTP_SERVER_IP="192.168.1.20"
 DNS_SERVER_IP="192.168.1.30"
+DB_SERVER_IP="192.168.1.40"
 
 # Set variables
 BACKUP_DIR="/home/backup"
@@ -104,6 +117,10 @@ rsync -avz -e "ssh -i $SSH_KEY" "$USERNAME@$FTP_SERVER_IP:/srv/ftp" "$BACKUP_DIR
 # DNS Server Backup
 rsync -avz -e "ssh -i $SSH_KEY" "$USERNAME@$DNS_SERVER_IP:/etc/bind" "$BACKUP_DIR/dns_config_$TIMESTAMP"
 rsync -avz -e "ssh -i $SSH_KEY" "$USERNAME@$DNS_SERVER_IP:/var/named" "$BACKUP_DIR/dns_zones_$TIMESTAMP"
+
+# Database Server Backup
+ssh -i $SSH_KEY "$USERNAME@$DB_SERVER_IP" "pg_dumpall -U postgres | gzip > /tmp/postgres_backup.sql.gz"
+rsync -avz -e "ssh -i $SSH_KEY" "$USERNAME@$DB_SERVER_IP:/tmp/postgres_backup.sql.gz" "$BACKUP_DIR/postgres_backup_$TIMESTAMP"
 
 # Log completion
 echo "Backup completed at $TIMESTAMP" >> "$LOGFILE"
@@ -133,7 +150,3 @@ Verify:
 - The script runs without errors.
 - Backup files appear in `/home/backup/`.
 - Cron jobs execute on schedule (`cat /home/backup/backup_cron.log`).
-
----
-
-Now your **Backup Server** can securely retrieve configuration and file information from your **Web, FTP, and DNS servers** every 30 minutes! Let me know if you need any tweaks! 🚀
