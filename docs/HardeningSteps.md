@@ -126,3 +126,8 @@ echo "*/30 * * * * sudo aide --check | tee -a /var/log/aide.log" | sudo tee -a /
 
 3. Copy anything below `ARP COMMANDS` into a shell script and run it.
 
+## **8. Static ARP Entries for MikroTik**
+
+1. Paste the setup script in [mikrotik-arp-setup.rsc](../mikrotik-arp-setup.rsc).
+
+      * **Don't use the one in GitHub.** Use the one in Discord with mac addresses and IP addresses.
