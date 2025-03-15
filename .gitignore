@@ -1,1 +1,2 @@
-.confidential # Contains usernames or keys
+# Contains usernames or keys
+*.confidential
