@@ -116,3 +116,13 @@ sudo mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 ```bash
 echo "*/30 * * * * sudo aide --check | tee -a /var/log/aide.log" | sudo tee -a /etc/crontab
 ```
+## **7. Static ARP Entries on Linux**
+
+1. Find the interface in use with `ip addr`.
+2. Paste the [arp-setup](../arp-setup) script into `/etc/NetworkManager/dispatcher.d/pre-up.d/arp-setup`.
+
+      * **Don't use the one from GitHub.** Use the one in Discord with the mac addresses and IPs.
+      * Replace `INTERFACE` with the interface from step 1.
+
+3. Copy anything below `ARP COMMANDS` into a shell script and run it.
+

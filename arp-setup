@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+interface=$1
+event=$2
+
+if [[ $interface != "DEVICE" ]] || [[ $event != "up" ]]
+then
+  return 0
+fi
+
+# ARP COMMANDS
+ip neigh replace IP lladdr MAC dev $interface nud permanent
