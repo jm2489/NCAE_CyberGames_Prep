@@ -19,6 +19,8 @@ SQL_PORT="5432"
 
 CERT_SRV="172.18.0.38"
 
+DNS="192.168.4.12"
+
 #Checks to see if conntrack is enabled
 modprobe ip_conntrack
 
@@ -34,7 +36,8 @@ iptables -I INPUT -p tcp --dport 443 -m --ctstate NEW,ESTABLISHED -j ACCEPT
 
 iptables -I INPUT -s $ROUTER -p tcp --dport 22 --ctstate NEW,ESTABLISHED -j ACCEPT
 iptables -I INPUT -s $BACKUP -p tcp --dport 22 --ctstate NEW,ESTABLISHED -j ACCEPT
-iptables -I INPUT -s $CERT_SRV -p --ctstate NEW,ESTABLISED -j ACCEPT
+iptables -I INPUT -s $CERT_SRV --ctstate NEW,ESTABLISED -j ACCEPT
+iptables -I INPUT -s $DNS --ctstate NEW,ESTABLISED -j ACCEPT
 
 iptables -P FORWARD DROP
 iptables -P INPUT DROP
