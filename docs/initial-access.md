@@ -32,11 +32,14 @@ First steps to run once VMs are accessible. **Not for MikroTik router.**
 
 5. Run firewall setup scripts.
 
-    1. Ensure that you run the correct script for the correct machine.
-    2. Check for ufw presence with `ufw`. If it exists, run the ufw script. If not, revert to using the iptables script.
-    3. Copy script to a file.
-    4. `chmod +x` the file.
-    5. Run the file./
+    1. Ensure that you run the correct script for the correct machine (the [team1](../firewallSetup/team1) directory has the latest scripts).
+    2. Copy script to a file.
+    3. `chmod +x` the file.
+    4. Run the file.
+    5. Paste [iptables-restore.service](../firewallSetup/iptables-restore.service) to `/etc/systemd/system/iptables-restore.service`.
+    6. Run `systemctl daemon-reload`
+    7. Run `systemctl enable iptables-restore`
+    * Future changes to firewall will require running the save commands at the bottom of the firewall scripts.
 
 6. Install command logger.
     1. Copy contents of [youdontevengohere.sh](../youdontevengohere.sh) to `/usr/local/bin/youdontevengohere.sh`

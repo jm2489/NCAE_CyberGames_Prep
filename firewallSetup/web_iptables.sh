@@ -25,6 +25,7 @@ read SQL_PORT
 modprobe ip_conntrack
 modprobe ip_conntrack_ftp
 
+iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 
 #OUTPUT Connections
