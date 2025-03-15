@@ -10,3 +10,4 @@ First steps to run once MikroTik router is accessible.
 
 4. Paste in the [mikrotik-setup.rsc](../mikrotik-setup.rsc) script.
     * **Don't use the one from GitHub.** Use the one from Discord that includes usernames, passwords, and SSH keys.
+    * Set paste delay to 25 otherwise you may run into issues.
