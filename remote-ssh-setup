@@ -33,9 +33,13 @@ useradd -c "NJIT Local Only" -G "highlanders" -s "/bin/bash" "njit-local"
 echo "Enter password for local access user."
 /bin/passwd "njit-local"
 
-echo "Disabling SSH password authentication and adding group match."
-sed -i -E 's/#?PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+echo "Disabling SSH password authentication, adding group match, and disallowing root login."
+sed -i -E '/AllowGroups/s/^/#/' /etc/ssh/sshd_config
+sed -i -E '/PermitRootLogin/s/^/#/' /etc/ssh/sshd_config
+sed -i -E '/PasswordAuthentication/s/^/#/' /etc/ssh/sshd_config
 echo "AllowGroups highlanders" >> /etc/ssh/sshd_config
+echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 
 echo "Deleting root password authentication."
 /bin/passwd -dl root
