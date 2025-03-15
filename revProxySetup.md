@@ -99,3 +99,16 @@ sudo vim /etc/apache2/sites-available/000-default.conf
 ```bash
 sudo systemctl restart apache2
 ```
+
+## Final Thoughts
+- systemctl cat etechacademy
+- Check if its being run as root USER. If so, swap it
+- systemctl status etechacademy to see its config file
+- Cert script is
+
+# Cert Script
+certbot --nginx --server https://ca.ncaecybergames.org/acme/acme/directory
+
+Check if md5sum = 761e8fbafabceac17680a28c82a097d2
+
+Link both .pem files to VirtualHost proxy

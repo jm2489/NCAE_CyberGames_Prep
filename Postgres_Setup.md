@@ -45,3 +45,15 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO bill_kaplan;
 ```bash
 GRANT ALL PRIVILEGES ON TABLE users TO bill_kaplan;
 ```
+## 5. Removing Users \ Security
+Delete a Postgres User With dropuser Utility
+```bash
+sudo -u postgres dropuser <user> -e
+```
+
+Listing users in postgres terminal
+```bash
+\du
+
+DROP USER <name>;
+```
