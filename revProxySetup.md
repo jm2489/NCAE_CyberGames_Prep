@@ -82,7 +82,7 @@ sudo vim /etc/apache2/sites-available/000-default.conf
 <VirtualHost *:80>
     ProxyPreserveHost On
 
-    ProxyPass / http:localhost:8000/
+    ProxyPass / http://localhost:8000/
     ProxyPassReverse / http://localhost:8000/
 </VirtualHost>
 <VirtualHost *:443>
