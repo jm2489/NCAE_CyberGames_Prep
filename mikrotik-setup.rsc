@@ -45,7 +45,7 @@
 
 # NAT
 /ip firewall nat
-  add chain=srcnat action=masquerade src-address=$lanNetwork/$lanCidr out-interface=wan
+  add chain=srcnat action=masquerade src-address="$lanNetwork/$lanCidr" out-interface=wan
 
 # Port Forwards
   add chain=dstnat action=dst-nat to-address=$teamWeb in-interface=wan dst-port=80 protocol=tcp comment="Web HTTP"
@@ -67,12 +67,12 @@
   add chain=forward action=drop connection-state=invalid
   add chain=forward action=drop connection-state=new connection-nat-state=!dstnat \
     in-interface=wan comment="Drop anything from WAN not port forwarded"
-  add chain=forward action=accept in-interface=lan dst-address=$compDns port=53 comment="Allow Access to DNS"
+  add chain=forward action=accept in-interface=lan dst-address=$compDns protocol=udp port=53 comment="Allow Access to DNS"
   add chain=forward action=accept in-interface=lan dst-address=$compCdn comment="Allow Access to CDN"
   add chain=forward action=accept in-interface=lan dst-address=$compCa comment="Allow Access to CA"
   add chain=forward action=accept in-interface=lan src-address=$teamBackup port=22 protocol=tcp dst-address=$teamFtp \
     comment="Allow SSH Access to FTP from Backup"
-  add chain=forward action=reject connection-state=new in-interface=lan dst-address=$wanNetwork/$wanCidr \
+  add chain=forward action=reject connection-state=new in-interface=lan dst-address="$wanNetwork/$wanCidr" \
     comment="Reject anything from LAN to unknown WAN (except public Internet)"
 
 # SSH
@@ -114,5 +114,5 @@
   proxy set enabled=no
   socks set enabled=no
   upnp set enabled=no
-  cloud set ddns-enabled=no update-time=no
+  cloud set update-time=no
 }
