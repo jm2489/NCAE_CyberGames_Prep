@@ -82,8 +82,8 @@ sudo vim /etc/apache2/sites-available/000-default.conf
 <VirtualHost *:80>
     ProxyPreserveHost On
 
-    ProxyPass / http://team4.ncaecybergames.org:8000/
-    ProxyPassReverse / http://team4.ncaecybergames.org:8000/
+    ProxyPass / http:localhost:8000/
+    ProxyPassReverse / http://localhost:8000/
 </VirtualHost>
 <VirtualHost *:443>
     ServerName team4.ncaecybergames.org
@@ -91,8 +91,8 @@ sudo vim /etc/apache2/sites-available/000-default.conf
     SSLProxyVerify require
     SSLProxyCACertificateFile /path/to/custom_cert.pem
     SSLProxyCheckPeerCN on  # or omit, default is on
-    ProxyPass / https://team4.ncaecybergames.org:8000/
-    ProxyPassReverse / https://team4.ncaecybergames.org:8000/
+    ProxyPass / https://localhost:8000/
+    ProxyPassReverse / https:localhost:8000/
 </VirtualHost>
 ```
 
