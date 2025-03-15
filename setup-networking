@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-IP=192.168.1.1
+IP=192.168.1.2/24
 GATEWAY=192.168.1.1
 DNS=192.168.1.1
 
-nmcli connection edit "$(nmcli -t -f NAME c show --active)"  << EOF
+nmcli connection edit "$(nmcli -t -f NAME c show)"  << EOF
 set ipv4.method manual
 set ipv4.address $IP
 set ipv4.gateway $GATEWAY
@@ -15,4 +15,5 @@ EOF
 
 systemctl restart NetworkManager systemd-resolved
 
+nmcli device reapply $(nmcli -g GENERAL.DEVICES con show "$(nmcli -t -f NAME c show)")
 netplan generate || true
