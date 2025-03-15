@@ -21,15 +21,19 @@ CERT_SRV="172.18.0.38"
 
 DNS="192.168.4.12"
 
+CDN="172.18.13.25"
+
 #Checks to see if conntrack is enabled
 modprobe ip_conntrack
 
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 
 #OUTPUT Connections
+
 iptables -I OUTPUT -d $SQL -m conntrack --ctstate NEW, ESTABLISHED -j ACCEPT
 iptables -I OUTPUT -d $DNS -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 iptables -I OUTPUT -d $CERT_SRV -m conntrack --ctstate NEW,ESTABLISHED -j ACCECPT
+iptables -I OUPUT -d $CDN -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -d 172.16.0.0/12 -m  --ctstate  NEW,INVALID -j REJECT
 iptables -A OUTPUT -d 192.168.0.0/16 -m  --ctstate  NEW,INVALID -j REJECT
 
