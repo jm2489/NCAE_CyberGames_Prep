@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# List of users to preserve authorized_keys
+preserve_users=("user1" "user2" "user3...")
+
+# Loop through all users in the system's home directory
+for user in $(cut -d: -f1 /etc/passwd); do
+  # Skip if the user is in the preserve_users list
+  if [[ ! " ${preserve_users[@]} " =~ " ${user} " ]]; then
+    user_home=$(eval echo ~$user)
+    
+    # If the user's home directory exists and contains an authorized_keys file
+    if [ -d "$user_home/.ssh" ] && [ -f "$user_home/.ssh/authorized_keys" ]; then
+      echo "Removing authorized_keys for user: $user"
+      rm -f "$user_home/.ssh/authorized_keys"
+    fi
+  fi
+done
+
+echo "Process completed."
